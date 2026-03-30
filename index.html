@@ -16,7 +16,7 @@
             height: 100vh;
         }
         .container {
-            background: white;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
             width: 380px;
             padding: 30px;
             border-radius: 18px;
@@ -57,8 +57,18 @@
             font-weight: bold;
         }
         .btn-add {
-            background: #000000;
+            background: #ff6f61;
             color: white;
+        }
+        .btn-add:hover {
+            background: #ff3b2e;
+        }
+        .btn-save {
+            background: #3cb371;
+            color: white;
+        }
+        .btn-save:hover {
+            background: #2e8b57;
         }
         .btn-reset {
             background: #ffffff;
@@ -81,31 +91,6 @@
             font-size: 18px;
             font-weight: bold;
             color: #4a57ff;
-        }
-            /* Cores dinâmicas e alegres */
-        .container {
-            background: linear-gradient(135deg, #ffecd2, #fcb69f);
-        }
-        .btn-add {
-            background: #ff6f61;
-        }
-        .btn-add:hover {
-            background: #ff3b2e;
-        }
-        .btn-save {
-            background: #3cb371;
-            color: white;
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .btn-save:hover {
-            background: #2e8b57;
         }
     </style>
 </head>
@@ -134,7 +119,7 @@
 
         <button class="btn-add" onclick="adicionarTreino()">Dia de Treino</button>
         <button class="btn-save" onclick="salvarRegistro()">Salvar Registro</button>
-        <button class="btn-reset"" onclick="resetar()">Resetar Contador</button>
+        <button class="btn-reset" onclick="resetar()">Resetar Contador</button>
 
         <div class="motivacional" id="motivacional">Vamos começar! 💪🔥</div>
     </div>
@@ -179,13 +164,6 @@
             historico.push({ data: hoje, total: contador });
             localStorage.setItem('treinos', JSON.stringify(historico));
             alert('Registro salvo com sucesso! 🎉🔥');
-        }
-
-        function adicionarTreino() {
-            if (contador < META) {
-                contador++;
-                atualizarTela();
-            }
         }
 
         function resetar() {
