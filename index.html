@@ -1,134 +1,158 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botao Contador</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contador de Treinos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f6ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            width: 380px;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-top: 10px;
+            font-size: 26px;
+        }
+        .contador {
+            font-size: 60px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #dedede;
+            border-radius: 10px;
+            margin: 10px 0 20px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #4a57ff;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .btn-add {
+            background: #000000;
+            color: white;
+        }
+        .btn-reset {
+            background: #ffffff;
+            color: #333;
+            border: 2px solid #999;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .stat-box {
+            width: 48%;
+            background: #f7f7f7;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .motivacional {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #4a57ff;
+        }
+    </style>
 </head>
 <body>
-   import { useState } from "react";
-import { Button } from "./ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Progress } from "./ui/progress";
-import { Dumbbell, TrendingUp, Trophy } from "lucide-react";
+    <div class="container">
+        <h1>Contador de Treinos</h1>
+        <p>sua jornada fitness</p>
 
-export function TrainingCounter() {
-  const [trainingDays, setTrainingDays] = useState(0);
-  const goal = 200;
-  const progress = (trainingDays / goal) * 100;
+        <div class="contador" id="contador">0</div>
+        <p>de 200 dias de treino</p>
 
-  const handleAddDay = () => {
-    if (trainingDays < goal) {
-      setTrainingDays(trainingDays + 1);
-    }
-  };
-
-  const handleReset = () => {
-    setTrainingDays(0);
-  };
-
-  return (
-    <Card className="w-full max-w-md">
-      <CardHeader className="text-center">
-        <div className="flex justify-center mb-4">
-          <div className="p-4 bg-primary/10 rounded-full">
-            <Dumbbell className="w-12 h-12 text-primary" />
-          </div>
-        </div>
-        <CardTitle className="text-2xl">Contador de Treinos</CardTitle>
-        <p className="text-muted-foreground">
-          Acompanhe sua jornada fitness
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Contador Principal */}
-        <div className="text-center space-y-2">
-          <div className="text-6xl font-bold text-primary">
-            {trainingDays}
-          </div>
-          <div className="text-muted-foreground">
-            de {goal} dias de treino
-          </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
 
-        {/* Barra de Progresso */}
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="flex items-center gap-1">
-              <TrendingUp className="w-4 h-4" />
-              Progresso
-            </span>
-            <span className="font-medium">{progress.toFixed(1)}%</span>
-          </div>
-          <Progress value={progress} className="h-3" />
-        </div>
-
-        {/* Mensagem Motivacional */}
-        {trainingDays >= goal ? (
-          <div className="bg-primary/10 p-4 rounded-lg text-center space-y-2">
-            <Trophy className="w-8 h-8 text-primary mx-auto" />
-            <p className="font-semibold text-primary">
-              Meta Alcançada! 🎉
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Parabéns! Você completou sua meta anual!
-            </p>
-          </div>
-        ) : trainingDays >= goal * 0.75 ? (
-          <div className="bg-orange-500/10 p-4 rounded-lg text-center">
-            <p className="text-sm font-medium text-orange-700 dark:text-orange-400">
-              Falta pouco! Você está quase lá!
-            </p>
-          </div>
-        ) : trainingDays >= goal * 0.5 ? (
-          <div className="bg-blue-500/10 p-4 rounded-lg text-center">
-            <p className="text-sm font-medium text-blue-700 dark:text-blue-400">
-              Metade do caminho! Continue firme!
-            </p>
-          </div>
-        ) : null}
-
-        {/* Estatísticas */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-muted p-3 rounded-lg text-center">
-            <div className="text-2xl font-bold">{goal - trainingDays}</div>
-            <div className="text-xs text-muted-foreground">
-              dias restantes
+        <div class="stats">
+            <div class="stat-box">
+                <div id="diasRestantes">200</div>
+                dias restantes
             </div>
-          </div>
-          <div className="bg-muted p-3 rounded-lg text-center">
-            <div className="text-2xl font-bold">
-              {trainingDays > 0 ? Math.ceil(365 / (goal / trainingDays)) : 0}
+            <div class="stat-box">
+                <div id="diasMeta">0</div>
+                dias até a meta
             </div>
-            <div className="text-xs text-muted-foreground">
-              dias até a meta
-            </div>
-          </div>
         </div>
 
-        {/* Botões de Ação */}
-        <div className="space-y-2">
-          <Button
-            onClick={handleAddDay}
-            disabled={trainingDays >= goal}
-            className="w-full"
-            size="lg"
-          >
-            <Dumbbell className="w-4 h-4 mr-2" />
-            Adicionar Dia de Treino
-          </Button>
-          <Button
-            onClick={handleReset}
-            variant="outline"
-            className="w-full"
-            size="sm"
-          >
-            Resetar Contador
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
+        <button class="btn-add" onclick="adicionarTreino()">Dia de Treino</button>
+        <button class="btn-reset" onclick="resetar()">Resetar Contador</button>
+
+        <div class="motivacional" id="motivacional">Vamos começar! 💪🔥</div>
+    </div>
+
+    <script>
+        const META = 200;
+        let contador = 0;
+
+        function atualizarTela() {
+            document.getElementById('contador').textContent = contador;
+            document.getElementById('diasRestantes').textContent = META - contador;
+            document.getElementById('diasMeta').textContent = contador;
+
+            let progresso = (contador / META) * 100;
+            document.getElementById('progressFill').style.width = progresso + '%';
+
+            atualizarMensagem(progresso);
+        }
+
+        function atualizarMensagem(p) {
+            let msg = document.getElementById('motivacional');
+
+            if (p === 0) msg.textContent = 'Vamos começar! 💪🔥';
+            else if (p < 10) msg.textContent = 'Cada passo conta! 🚀';
+            else if (p < 25) msg.textContent = 'O ritmo tá gostoso! Continua! 😎';
+            else if (p < 50) msg.textContent = 'Você tá voando! ✨';
+            else if (p < 75) msg.textContent = 'Metade da jornada concluída! 🔥';
+            else if (p < 100) msg.textContent = 'A linha de chegada tá logo ali! 🏁';
+            else msg.textContent = 'META BATIDA! Você é incrível! 🏆🔥';
+        }
+
+        function adicionarTreino() {
+            if (contador < META) {
+                contador++;
+                atualizarTela();
+            }
+        }
+
+        function resetar() {
+            contador = 0;
+            atualizarTela();
+        }
+
+        atualizarTela();
+    </script>
 </body>
 </html>
