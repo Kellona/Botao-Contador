@@ -95,9 +95,19 @@
         .btn-save {
             background: #3cb371;
             color: white;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
         }
         .btn-save:hover {
-            ba
+            background: #2e8b57;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -123,13 +133,15 @@
         </div>
 
         <button class="btn-add" onclick="adicionarTreino()">Dia de Treino</button>
-        <button class="btn-reset" onclick="resetar()">Resetar Contador</button>
+        <button class="btn-save" onclick="salvarRegistro()">Salvar Registro</button>
+        <button class="btn-reset"" onclick="resetar()">Resetar Contador</button>
 
         <div class="motivacional" id="motivacional">Vamos começar! 💪🔥</div>
     </div>
 
     <script>
         const META = 200;
+        let historico = JSON.parse(localStorage.getItem('treinos')) || [];
         let contador = 0;
 
         function atualizarTela() {
@@ -153,6 +165,20 @@
             else if (p < 75) msg.textContent = 'Metade da jornada concluída! 🔥';
             else if (p < 100) msg.textContent = 'A linha de chegada tá logo ali! 🏁';
             else msg.textContent = 'META BATIDA! Você é incrível! 🏆🔥';
+        }
+
+        function adicionarTreino() {
+            if (contador < META) {
+                contador++;
+                atualizarTela();
+            }
+        }
+
+        function salvarRegistro() {
+            const hoje = new Date().toLocaleDateString('pt-BR');
+            historico.push({ data: hoje, total: contador });
+            localStorage.setItem('treinos', JSON.stringify(historico));
+            alert('Registro salvo com sucesso! 🎉🔥');
         }
 
         function adicionarTreino() {
