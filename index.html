@@ -6,28 +6,129 @@
     <title>Botao Contador</title>
 </head>
 <body>
-    <header>
-        <h1>Contador de Treino</h1>
-        <p>Acompanhe sua jornada fitness</p>
+   import { useState } from "react";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Progress } from "./ui/progress";
+import { Dumbbell, TrendingUp, Trophy } from "lucide-react";
 
-    </header>
+export function TrainingCounter() {
+  const [trainingDays, setTrainingDays] = useState(0);
+  const goal = 200;
+  const progress = (trainingDays / goal) * 100;
 
-    <section>
-        <h2></h2>
+  const handleAddDay = () => {
+    if (trainingDays < goal) {
+      setTrainingDays(trainingDays + 1);
+    }
+  };
 
-    </section>
+  const handleReset = () => {
+    setTrainingDays(0);
+  };
 
-    <footer>
-import { TrainingCounter } from "./components/TrainingCounter";
-
-export default function App() {
   return (
-    <div className="size-full flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      <TrainingCounter />
-    </div>
+    <Card className="w-full max-w-md">
+      <CardHeader className="text-center">
+        <div className="flex justify-center mb-4">
+          <div className="p-4 bg-primary/10 rounded-full">
+            <Dumbbell className="w-12 h-12 text-primary" />
+          </div>
+        </div>
+        <CardTitle className="text-2xl">Contador de Treinos</CardTitle>
+        <p className="text-muted-foreground">
+          Acompanhe sua jornada fitness
+        </p>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        {/* Contador Principal */}
+        <div className="text-center space-y-2">
+          <div className="text-6xl font-bold text-primary">
+            {trainingDays}
+          </div>
+          <div className="text-muted-foreground">
+            de {goal} dias de treino
+          </div>
+        </div>
+
+        {/* Barra de Progresso */}
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm">
+            <span className="flex items-center gap-1">
+              <TrendingUp className="w-4 h-4" />
+              Progresso
+            </span>
+            <span className="font-medium">{progress.toFixed(1)}%</span>
+          </div>
+          <Progress value={progress} className="h-3" />
+        </div>
+
+        {/* Mensagem Motivacional */}
+        {trainingDays >= goal ? (
+          <div className="bg-primary/10 p-4 rounded-lg text-center space-y-2">
+            <Trophy className="w-8 h-8 text-primary mx-auto" />
+            <p className="font-semibold text-primary">
+              Meta Alcançada! 🎉
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Parabéns! Você completou sua meta anual!
+            </p>
+          </div>
+        ) : trainingDays >= goal * 0.75 ? (
+          <div className="bg-orange-500/10 p-4 rounded-lg text-center">
+            <p className="text-sm font-medium text-orange-700 dark:text-orange-400">
+              Falta pouco! Você está quase lá!
+            </p>
+          </div>
+        ) : trainingDays >= goal * 0.5 ? (
+          <div className="bg-blue-500/10 p-4 rounded-lg text-center">
+            <p className="text-sm font-medium text-blue-700 dark:text-blue-400">
+              Metade do caminho! Continue firme!
+            </p>
+          </div>
+        ) : null}
+
+        {/* Estatísticas */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-muted p-3 rounded-lg text-center">
+            <div className="text-2xl font-bold">{goal - trainingDays}</div>
+            <div className="text-xs text-muted-foreground">
+              dias restantes
+            </div>
+          </div>
+          <div className="bg-muted p-3 rounded-lg text-center">
+            <div className="text-2xl font-bold">
+              {trainingDays > 0 ? Math.ceil(365 / (goal / trainingDays)) : 0}
+            </div>
+            <div className="text-xs text-muted-foreground">
+              dias até a meta
+            </div>
+          </div>
+        </div>
+
+        {/* Botões de Ação */}
+        <div className="space-y-2">
+          <Button
+            onClick={handleAddDay}
+            disabled={trainingDays >= goal}
+            className="w-full"
+            size="lg"
+          >
+            <Dumbbell className="w-4 h-4 mr-2" />
+            Adicionar Dia de Treino
+          </Button>
+          <Button
+            onClick={handleReset}
+            variant="outline"
+            className="w-full"
+            size="sm"
+          >
+            Resetar Contador
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
-
-    </footer>
 </body>
 </html>
